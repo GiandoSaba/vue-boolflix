@@ -13,7 +13,10 @@
       <p>{{ filmObj.original_title }}</p>
     </li>
     <li class="list-group-item">
-      <i :class="'flag flag-' + filmObj.original_language" />
+      <h1 class="fs-5">
+        Lingua
+      </h1>
+      <i :class="'flag flag-' + getFlag(filmObj.original_language)" />
     </li>
     <li class="list-group-item">
       <h1 class="fs-5">
@@ -29,6 +32,14 @@ export default {
   name: 'Card',
   // eslint-disable-next-line vue/require-prop-types
   props: ['filmObj'],
+  methods: {
+    getFlag(lang) {
+      if (lang === 'en') {
+        return 'us';
+      }
+      return lang;
+    },
+  },
 };
 </script>
 
