@@ -2,45 +2,25 @@
   <main>
     <div class="container-fluid">
       <div class="row mx-2">
-        <ul
+        <Card
           v-for="(film,index) in films"
           :key="index"
-          class="list-group col-3 my-3"
-        >
-          <li class="list-group-item">
-            <h1 class="fs-5">
-              Titolo
-            </h1>
-            <p>{{ film.title }}</p>
-          </li>
-          <li class="list-group-item">
-            <h1 class="fs-5">
-              Titolo Originale
-            </h1>
-            <p>{{ film.original_title }}</p>
-          </li>
-          <li class="list-group-item">
-            <h1 class="fs-5">
-              Lingua
-            </h1>
-            <p>{{ film.original_language }}</p>
-          </li>
-          <li class="list-group-item">
-            <h1 class="fs-5">
-              Voto
-            </h1>
-            <p>{{ film.vote_average }}</p>
-          </li>
-        </ul>
+          :film-obj="film"
+        />
       </div>
     </div>
   </main>
 </template>
 
 <script>
+import Card from './Card.vue';
 
 export default {
   name: 'Main',
+  components: {
+    Card,
+  },
+  // eslint-disable-next-line vue/require-prop-types
   props: ['films'],
   data() {
     return {
