@@ -5,7 +5,7 @@
         <Card
           v-for="(film,index) in films"
           :key="index"
-          :film-obj="film"
+          :list="film"
         />
       </div>
     </div>
@@ -22,11 +22,6 @@ export default {
   },
   // eslint-disable-next-line vue/require-prop-types
   props: ['films'],
-  data() {
-    return {
-      filmsArray: this.films,
-    };
-  },
 };
 </script>
 

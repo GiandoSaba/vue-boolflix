@@ -1,28 +1,30 @@
 <template>
-  <ul class="list-group col-3 my-3">
+  <ul
+    class="list-group col-3 my-3"
+  >
     <li class="list-group-item">
       <h1 class="fs-5">
         Titolo
       </h1>
-      <p>{{ filmObj.title }}</p>
+      <p>{{ list.title }}</p>
     </li>
     <li class="list-group-item">
       <h1 class="fs-5">
         Titolo Originale
       </h1>
-      <p>{{ filmObj.original_title }}</p>
+      <p>{{ list.original_title }}</p>
     </li>
     <li class="list-group-item">
       <h1 class="fs-5">
         Lingua
       </h1>
-      <i :class="'flag flag-' + getFlag(filmObj.original_language)" />
+      <i :class="'flag flag-' + getFlag(list.original_language)" />
     </li>
     <li class="list-group-item">
       <h1 class="fs-5">
         Voto
       </h1>
-      <p>{{ filmObj.vote_average }}</p>
+      <p>{{ list.vote_average }}</p>
     </li>
   </ul>
 </template>
@@ -31,7 +33,7 @@
 export default {
   name: 'Card',
   // eslint-disable-next-line vue/require-prop-types
-  props: ['filmObj'],
+  props: ['list'],
   methods: {
     getFlag(lang) {
       if (lang === 'en') {
