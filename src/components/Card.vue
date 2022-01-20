@@ -55,10 +55,20 @@ export default {
   },
   methods: {
     getFlag(lang) {
-      if (lang === 'en') {
-        return 'us';
+      switch (lang) {
+        case 'en':
+          return 'us';
+        case 'ko':
+          return 'kr';
+        case 'ja':
+          return 'jp';
+        case 'ur':
+          return 'pk';
+        case 'zh':
+          return 'cn';
+        default:
+          return lang;
       }
-      return lang;
     },
     roundNumber(num) {
       const number = parseFloat(num);
