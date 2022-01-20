@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <Header @takeSearch="getFilms($event)" />
+    <Header @takeSearch="search($event)" />
     <Main
-      :films="films"
+      :cards="cards"
     />
   </div>
 </template>
@@ -23,22 +23,51 @@ export default {
     return {
       query: 'https://api.themoviedb.org/3/search/',
       api_key: '89eb092bce881ee73ddbbdbb875f67e8',
-      searchText: '',
-      films: null,
+      language: 'it_IT',
+      searchText: null,
+      cards: {
+        films: [],
+        series: [],
+      },
     };
   },
   methods: {
-    getFilms(text) {
-      this.searchText = text;
+    search(text) {
+      if (text !== '') {
+        this.searchText = text;
+        this.getFilms();
+        this.getSeries();
+      }
+    },
+    getFilms() {
       const endPoint = 'movie';
       const params = {
         api_key: this.api_key,
+        language: this.language,
         query: this.searchText,
       };
       axios
         .get(`${this.query}${endPoint}`, { params })
         .then((result) => {
-          this.films = result.data.results;
+          console.log(result);
+          this.cards.films = result.data.results;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    getSeries() {
+      const endPoint = 'tv';
+      const params = {
+        api_key: this.api_key,
+        language: this.language,
+        query: this.searchText,
+      };
+      axios
+        .get(`${this.query}${endPoint}`, { params })
+        .then((result) => {
+          console.log(result);
+          this.cards.series = result.data.results;
         })
         .catch((error) => {
           console.log(error);

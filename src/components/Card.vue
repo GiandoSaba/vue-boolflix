@@ -6,13 +6,13 @@
       <h1 class="fs-5">
         Titolo
       </h1>
-      <p>{{ list.title }}</p>
+      <p>{{ (list.title) ? list.title : list.name }}</p>
     </li>
     <li class="list-group-item border-0">
       <h1 class="fs-5">
         Titolo Originale
       </h1>
-      <p>{{ list.original_title }}</p>
+      <p>{{ (list.original_title) ? list.original_title : list.original_name }}</p>
     </li>
     <li class="list-group-item border-0">
       <h1 class="fs-5">
