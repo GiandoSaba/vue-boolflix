@@ -31,12 +31,16 @@ export default {
       },
     };
   },
+  watch: {
+    searchText() {
+      this.getFilms();
+      this.getSeries();
+    },
+  },
   methods: {
     search(text) {
       if (text !== '') {
         this.searchText = text;
-        this.getFilms();
-        this.getSeries();
       }
     },
     getFilms() {

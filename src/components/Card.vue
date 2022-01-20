@@ -7,7 +7,7 @@
       class="list-group-item border-0"
     >
       <img
-        class="img-fluid"
+        class="img-fluid h-2"
         :src="`https://image.tmdb.org/t/p/w342${list.poster_path}`"
         :alt="list.title"
       >
@@ -44,8 +44,14 @@
 <script>
 export default {
   name: 'Card',
-  // eslint-disable-next-line vue/require-prop-types
-  props: ['list'],
+  props: {
+    list: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
+  },
   methods: {
     getFlag(lang) {
       if (lang === 'en') {
