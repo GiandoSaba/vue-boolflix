@@ -2,13 +2,25 @@
   <ul
     class="list-group col-2 border"
   >
+    <li
+      v-show="list.poster_path"
+      class="list-group-item border-0"
+    >
+      <img
+        class="img-fluid"
+        :src="`https://image.tmdb.org/t/p/w342${list.poster_path}`"
+        :alt="list.title"
+      >
+    </li>
     <li class="list-group-item border-0">
       <h1 class="fs-5">
         Titolo
       </h1>
       <p>{{ (list.title) ? list.title : list.name }}</p>
     </li>
-    <li class="list-group-item border-0">
+    <li
+      class="list-group-item border-0"
+    >
       <h1 class="fs-5">
         Titolo Originale
       </h1>
