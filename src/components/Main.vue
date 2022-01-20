@@ -1,7 +1,7 @@
 <template>
   <main>
     <div class="container-fluid">
-      <div class="row mx-2">
+      <div class="row gap-3 justify-content-center my-3 text-center">
         <Card
           v-for="(film,index) in films"
           :key="index"

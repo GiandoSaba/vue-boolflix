@@ -3,7 +3,6 @@
     <Header @takeSearch="getFilms($event)" />
     <Main
       :films="films"
-      :series="series"
     />
   </div>
 </template>
@@ -22,15 +21,22 @@ export default {
   },
   data() {
     return {
-      queryFilms:
-        'https://api.themoviedb.org/3/search/movie?api_key=89eb092bce881ee73ddbbdbb875f67e8&query=',
+      query: 'https://api.themoviedb.org/3/search/',
+      api_key: '89eb092bce881ee73ddbbdbb875f67e8',
+      searchText: '',
       films: null,
     };
   },
   methods: {
-    getFilms(value) {
+    getFilms(text) {
+      this.searchText = text;
+      const endPoint = 'movie';
+      const params = {
+        api_key: this.api_key,
+        query: this.searchText,
+      };
       axios
-        .get(this.queryFilms + value)
+        .get(`${this.query}${endPoint}`, { params })
         .then((result) => {
           this.films = result.data.results;
         })
