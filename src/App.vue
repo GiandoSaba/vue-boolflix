@@ -1,5 +1,8 @@
 <template>
-  <div id="app">
+  <div
+    id="app"
+    class="bg-dark bg-gradient"
+  >
     <Header @takeSearch="search($event)" />
     <Main
       :cards="cards"
@@ -26,8 +29,8 @@ export default {
       language: 'it_IT',
       searchText: null,
       cards: {
-        films: [],
-        series: [],
+        films: null,
+        series: null,
       },
     };
   },
@@ -53,8 +56,9 @@ export default {
       axios
         .get(`${this.query}${endPoint}`, { params })
         .then((result) => {
-          console.log(result);
-          this.cards.films = result.data.results;
+          if (result.data.results !== []) {
+            this.cards.films = result.data.results;
+          }
         })
         .catch((error) => {
           console.log(error);
@@ -70,8 +74,9 @@ export default {
       axios
         .get(`${this.query}${endPoint}`, { params })
         .then((result) => {
-          console.log(result);
-          this.cards.series = result.data.results;
+          if (result.data.results !== []) {
+            this.cards.series = result.data.results;
+          }
         })
         .catch((error) => {
           console.log(error);
@@ -83,4 +88,9 @@ export default {
 
 <style lang="scss">
 @import "~bootstrap/scss/bootstrap.scss";
+#app {
+  width: 100%;
+  height: 100vh;
+  overflow: auto;
+}
 </style>

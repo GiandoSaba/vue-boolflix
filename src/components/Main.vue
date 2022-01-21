@@ -1,50 +1,69 @@
 <template>
-  <main>
-    <div class="container-fluid">
+  <main class="py-1">
+    <div
+      v-if="cards.films || cards.series"
+      class="container-fluid text-white"
+    >
       <div
-        v-if="cards.films.length > 0"
-        class="row gap-3 justify-content-center my-3 text-center mt-3"
+        v-show="cards.films"
+        class="row gap-3 justify-content-center my-3 text-center p-3"
       >
-        <div class="col-12">
-          <h1>Film</h1>
+        <div
+          v-if="cards.films.length > 0"
+          class="col-12"
+        >
+          <h1>Films</h1>
+        </div>
+        <div
+          v-else
+          class="col-12"
+        >
+          <h2>
+            Nessun film trovato
+          </h2>
         </div>
         <Card
-          v-for="(film,index) in cards.films"
-          :key="index"
+          v-for="(film) in cards.films"
+          :key="film.id"
           :list="film"
         />
       </div>
       <div
-        v-else
-        class="row justify-content-center text-center"
+        v-show="cards.series"
+        class="row gap-3 justify-content-center my-3 text-center p-3"
       >
-        <div class="col-12">
-          <h1>
-            Nessun film trovato
-          </h1>
-        </div>
-      </div>
-      <div
-        v-if="cards.series.length > 0"
-        class="row gap-3 justify-content-center my-3 text-center mt-3"
-      >
-        <div class="col-12">
+        <div
+          v-if="cards.series.length > 0"
+          class="col-12"
+        >
           <h1>Serie TV</h1>
         </div>
+        <div
+          v-else
+          class="col-12"
+        >
+          <h2>
+            Nessuna serie tv trovata
+          </h2>
+        </div>
         <Card
-          v-for="(serie,index) in cards.series"
-          :key="index"
+          v-for="(serie) in cards.series"
+          :key="serie.id"
           :list="serie"
         />
       </div>
+    </div>
+    <div
+      v-else
+      class="container-fluid text-white"
+    >
       <div
-        v-else
-        class="row justify-content-center text-center"
+        class="row justify-content-center my-3 text-center p-3"
       >
-        <div class="col-12">
-          <h1>
-            Nessuna serie tv trovata
-          </h1>
+        <div
+          class="col-12"
+        >
+          <h1>Benvenuto in BOOLFLIX</h1>
         </div>
       </div>
     </div>

@@ -1,11 +1,30 @@
 <template>
-  <div class="card col-2 p-0">
-    <img
-      :src="`https://image.tmdb.org/t/p/original${list.poster_path}`"
-      class="card-img-top"
-      :alt="list.title"
+  <div
+    class="card col-2 p-0"
+    @mouseover="active = true"
+    @mouseleave="active = false"
+  >
+    <div
+      v-if="!active"
+      class="card-body"
     >
-    <div class="card-body">
+      <img
+        v-if="list.poster_path"
+        :src="`https://image.tmdb.org/t/p/original${list.poster_path}`"
+        class="card-img-top"
+        :alt="list.title"
+      >
+      <img
+        v-else
+        src="../assets/stock_image.png"
+        class="card-img-top"
+        :alt="list.title"
+      >
+    </div>
+    <div
+      v-else
+      class="card-body card-description"
+    >
       <ul class="list-group list-group-flush">
         <li class="list-group-item border-0">
           <h1 class="fs-5">
@@ -14,12 +33,22 @@
           <p>{{ (list.title) ? list.title : list.name }}</p>
         </li>
         <li
+          v-show="list.title !== list.original_title || list.name !== list.original_name"
           class="list-group-item border-0"
         >
           <h1 class="fs-5">
             Titolo Originale
           </h1>
           <p>{{ (list.original_title) ? list.original_title : list.original_name }}</p>
+        </li>
+        <li
+          v-show="list.overview"
+          class="list-group-item border-0"
+        >
+          <h1 class="fs-5">
+            Trama
+          </h1>
+          <p>{{ list.overview }}</p>
         </li>
         <li class="list-group-item border-0">
           <h1 class="fs-5">
@@ -53,6 +82,11 @@ export default {
       },
     },
   },
+  data() {
+    return {
+      active: false,
+    };
+  },
   methods: {
     getFlag(lang) {
       switch (lang) {
@@ -80,4 +114,11 @@ export default {
 
 <style scoped lang="scss">
 @import '~mdb-ui-kit/css/mdb.min.css';
+.card {
+  cursor: pointer;
+  .card-description {
+    height: 440px;
+    overflow: auto;
+  }
+}
 </style>
