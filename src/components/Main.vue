@@ -4,159 +4,42 @@
       v-if="cards.films || cards.series"
       class="container-fluid text-white"
     >
-      <div
+      <Cards
         v-show="cards.films"
-        class="row gap-3 justify-content-center my-3 text-center p-3"
-        :class="(!activeFilms) ? 'show_off' : ''"
-      >
-        <div
-          v-if="cards.films.length > 0"
-          class="col-12"
-        >
-          <div class="container-fluid d-flex justify-content-between align-items-end my_nav_menu">
-            <h1>Film</h1>
-            <h5
-              v-show="!activeFilms"
-              @click="activeFilms = !activeFilms"
-            >
-              Sfoglia tutti
-            </h5>
-            <h5
-              v-show="activeFilms"
-              @click="activeFilms = !activeFilms"
-            >
-              Nascondi
-            </h5>
-          </div>
-        </div>
-        <div
-          v-else
-          class="col-12"
-        >
-          <h2>
-            Nessun film trovato
-          </h2>
-        </div>
-        <Card
-          v-for="(film) in cards.films"
-          :key="film.id"
-          :list="film"
-        />
-      </div>
-      <div
+        :list="cards.films"
+        :title="'Film'"
+      />
+      <Cards
         v-show="cards.series"
-        class="row gap-3 justify-content-center my-3 text-center p-3"
-        :class="(!activeSeries) ? 'show_off' : ''"
-      >
-        <div
-          v-if="cards.series.length > 0"
-          class="col-12"
-        >
-          <div class="container-fluid d-flex justify-content-between align-items-end my_nav_menu">
-            <h1>Serie Tv</h1>
-            <h5
-              v-show="!activeSeries"
-              @click="activeSeries = !activeSeries"
-            >
-              Sfoglia tutti
-            </h5>
-            <h5
-              v-show="activeSeries"
-              @click="activeSeries = !activeSeries"
-            >
-              Nascondi
-            </h5>
-          </div>
-        </div>
-        <div
-          v-else
-          class="col-12"
-        >
-          <h2>
-            Nessuna serie tv trovata
-          </h2>
-        </div>
-        <Card
-          v-for="(serie) in cards.series"
-          :key="serie.id"
-          :list="serie"
-        />
-      </div>
+        :list="cards.series"
+        :title="'Serie TV'"
+      />
     </div>
     <div
       v-else
       class="container-fluid text-white"
     >
-      <div
-        class="row gap-3 justify-content-center my-3 text-center p-3"
-        :class="(!activeFilms) ? 'show_off' : ''"
-      >
-        <div
-          class="col-12"
-        >
-          <div class="container-fluid d-flex justify-content-between align-items-end my_nav_menu">
-            <h1>Film</h1>
-            <h5
-              v-show="!activeFilms"
-              @click="activeFilms = !activeFilms"
-            >
-              Sfoglia tutti
-            </h5>
-            <h5
-              v-show="activeFilms"
-              @click="activeFilms = !activeFilms"
-            >
-              Nascondi
-            </h5>
-          </div>
-        </div>
-        <Card
-          v-for="(film) in popular.films"
-          :key="film.id"
-          :list="film"
-        />
-      </div>
-      <div
+      <Cards
+        v-show="popular.films"
+        :list="popular.films"
+        :title="'Film Popolari'"
+      />
+      <Cards
         v-show="popular.series"
-        class="row gap-3 justify-content-center my-3 text-center p-3"
-        :class="(!activeSeries) ? 'show_off' : ''"
-      >
-        <div
-          class="col-12"
-        >
-          <div class="container-fluid d-flex justify-content-between align-items-end my_nav_menu">
-            <h1>Serie Tv</h1>
-            <h5
-              v-show="!activeSeries"
-              @click="activeSeries = !activeSeries"
-            >
-              Sfoglia tutti
-            </h5>
-            <h5
-              v-show="activeSeries"
-              @click="activeSeries = !activeSeries"
-            >
-              Nascondi
-            </h5>
-          </div>
-        </div>
-        <Card
-          v-for="(serie) in popular.series"
-          :key="serie.id"
-          :list="serie"
-        />
-      </div>
+        :list="popular.series"
+        :title="'Serie TV Popolari'"
+      />
     </div>
   </main>
 </template>
 
 <script>
-import Card from './Card.vue';
+import Cards from './Cards.vue';
 
 export default {
   name: 'Main',
   components: {
-    Card,
+    Cards,
   },
   props: {
     cards: {
@@ -172,30 +55,9 @@ export default {
       },
     },
   },
-  data() {
-    return {
-      activeFilms: false,
-      activeSeries: false,
-    };
-  },
 };
 </script>
 
 <style scoped lang="scss">
-.show_off {
-  height: 540px;
-  overflow: hidden;
-}
-
-.my_nav_menu {
-  h5:hover {
-    cursor: pointer;
-    text-decoration: underline;
-  }
-}
-
-.home_page {
-  height: 500px;
-}
 
 </style>

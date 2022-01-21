@@ -7,7 +7,8 @@
             <img
               src="../assets/logo.png"
               alt="logo"
-              class="mx-2"
+              class="mx-2 logo"
+              @click="reloadPage"
             >
             <ul class="list-inline text-white fs-4 mx-2">
               <li class="list-inline-item me-4 active">
@@ -58,11 +59,19 @@ export default {
       searched: '',
     };
   },
+  methods: {
+    reloadPage() {
+      window.location.reload();
+    },
+  },
 };
 </script>
 
 <style scoped lang="scss">
 .my_nav {
+  .logo{
+    cursor: pointer;
+  }
   li {
     a {
       text-decoration: none;

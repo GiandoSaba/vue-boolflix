@@ -5,9 +5,20 @@
   >
     <Header @takeSearch="search($event)" />
     <Main
+      v-if="loaded"
       :cards="searched"
       :popular="popularMovies"
     />
+    <div
+      v-else
+      class="container-fluid homepage"
+    >
+      <div class="d-flex h-100">
+        <h1 class="text-danger m-auto text-center fs-2">
+          Benvenuto in <span class="d-block fs-1">Boolflix</span>
+        </h1>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -29,7 +40,7 @@ export default {
       api_key: '89eb092bce881ee73ddbbdbb875f67e8',
       language: 'it_IT',
       searchText: null,
-      mount: false,
+      loaded: false,
       searched: {
         films: null,
         series: null,
@@ -45,14 +56,13 @@ export default {
       this.getFilms();
       this.getSeries();
     },
-    mount() {
-      this.getPopularFilms();
-      this.getPopularSeries();
-      console.log(this.popularMovies);
-    },
   },
   mounted() {
-    this.mount = true;
+    this.getPopularFilms();
+    this.getPopularSeries();
+    setTimeout(() => {
+      this.loaded = true;
+    }, 1000);
   },
   methods: {
     search(text) {
@@ -134,5 +144,8 @@ export default {
   width: 100%;
   height: 100vh;
   overflow: auto;
+  .homepage {
+    height: 80vh;
+  }
 }
 </style>

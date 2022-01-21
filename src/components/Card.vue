@@ -69,9 +69,9 @@
         <li class="list-group-item border-0">
           <h1 class="fs-5">
             <a
-              :href="`https://www.justwatch.com/${getTitleforJW(list.title, list.name)}`"
+              :href="`https://www.themoviedb.org/${getUrl(list.title, list.name)}`"
               target="_blank"
-            >Cerca su JustWatch</a>
+            >Cerca su TMDB</a>
           </h1>
         </li>
       </ul>
@@ -115,18 +115,13 @@ export default {
     roundNumber(num) {
       return Math.round(num / 2);
     },
-    getTitleforJW(title, name) {
+    getUrl(title, name) {
       if (title && !name) {
-        const str = 'it/film/';
-        const correctTitle = title.replaceAll("'", '').replaceAll(' ', '-');
-        return str + correctTitle;
+        return `movie/${this.list.id}`;
       }
       if (name && !title) {
-        const str = 'it/serie-tv/';
-        const correctTitle = name.replaceAll("'", '').replaceAll(' ', '-');
-        return str + correctTitle;
+        return `tv/${this.list.id}`;
       }
-
       return '';
     },
   },
