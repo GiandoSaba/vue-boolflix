@@ -5,7 +5,8 @@
   >
     <Header @takeSearch="search($event)" />
     <Main
-      :cards="cards"
+      :cards="searched"
+      :popular="popularMovies"
     />
   </div>
 </template>
@@ -24,13 +25,18 @@ export default {
   },
   data() {
     return {
-      query: 'https://api.themoviedb.org/3/search/',
+      query: 'https://api.themoviedb.org/3/',
       api_key: '89eb092bce881ee73ddbbdbb875f67e8',
       language: 'it_IT',
       searchText: null,
-      cards: {
+      mount: false,
+      searched: {
         films: null,
         series: null,
+      },
+      popularMovies: {
+        films: [],
+        series: [],
       },
     };
   },
@@ -39,6 +45,14 @@ export default {
       this.getFilms();
       this.getSeries();
     },
+    mount() {
+      this.getPopularFilms();
+      this.getPopularSeries();
+      console.log(this.popularMovies);
+    },
+  },
+  mounted() {
+    this.mount = true;
   },
   methods: {
     search(text) {
@@ -47,7 +61,7 @@ export default {
       }
     },
     getFilms() {
-      const endPoint = 'movie';
+      const endPoint = 'search/movie';
       const params = {
         api_key: this.api_key,
         language: this.language,
@@ -57,7 +71,7 @@ export default {
         .get(`${this.query}${endPoint}`, { params })
         .then((result) => {
           if (result.data.results !== []) {
-            this.cards.films = result.data.results;
+            this.searched.films = result.data.results;
           }
         })
         .catch((error) => {
@@ -65,7 +79,7 @@ export default {
         });
     },
     getSeries() {
-      const endPoint = 'tv';
+      const endPoint = 'search/tv';
       const params = {
         api_key: this.api_key,
         language: this.language,
@@ -75,8 +89,36 @@ export default {
         .get(`${this.query}${endPoint}`, { params })
         .then((result) => {
           if (result.data.results !== []) {
-            this.cards.series = result.data.results;
+            this.searched.series = result.data.results;
           }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    getPopularFilms() {
+      const endPoint = 'trending/movie/week';
+      const params = {
+        api_key: this.api_key,
+      };
+      axios
+        .get(`${this.query}${endPoint}`, { params })
+        .then((result) => {
+          this.popularMovies.films = result.data.results;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    getPopularSeries() {
+      const endPoint = 'trending/tv/week';
+      const params = {
+        api_key: this.api_key,
+      };
+      axios
+        .get(`${this.query}${endPoint}`, { params })
+        .then((result) => {
+          this.popularMovies.series = result.data.results;
         })
         .catch((error) => {
           console.log(error);

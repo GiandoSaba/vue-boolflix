@@ -69,7 +69,7 @@
         <li class="list-group-item border-0">
           <h1 class="fs-5">
             <a
-              :href="`https://www.justwatch.com/${getTitlefoJW(list.title, list.name)}`"
+              :href="`https://www.justwatch.com/${getTitleforJW(list.title, list.name)}`"
               target="_blank"
             >Cerca su JustWatch</a>
           </h1>
@@ -115,7 +115,7 @@ export default {
     roundNumber(num) {
       return Math.round(num / 2);
     },
-    getTitlefoJW(title, name) {
+    getTitleforJW(title, name) {
       if (title && !name) {
         const str = 'it/film/';
         const correctTitle = title.replaceAll("'", '').replaceAll(' ', '-');

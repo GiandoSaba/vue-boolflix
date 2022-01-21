@@ -85,11 +85,67 @@
     </div>
     <div
       v-else
-      class="container-fluid text-white home_page d-flex"
+      class="container-fluid text-white"
     >
-      <h1 class="m-auto text-danger text-center">
-        Benvenuto in <span class="d-block fs-1 fw-bold">BOOLFLIX</span>
-      </h1>
+      <div
+        class="row gap-3 justify-content-center my-3 text-center p-3"
+        :class="(!activeFilms) ? 'show_off' : ''"
+      >
+        <div
+          class="col-12"
+        >
+          <div class="container-fluid d-flex justify-content-between align-items-end my_nav_menu">
+            <h1>Film</h1>
+            <h5
+              v-show="!activeFilms"
+              @click="activeFilms = !activeFilms"
+            >
+              Sfoglia tutti
+            </h5>
+            <h5
+              v-show="activeFilms"
+              @click="activeFilms = !activeFilms"
+            >
+              Nascondi
+            </h5>
+          </div>
+        </div>
+        <Card
+          v-for="(film) in popular.films"
+          :key="film.id"
+          :list="film"
+        />
+      </div>
+      <div
+        v-show="popular.series"
+        class="row gap-3 justify-content-center my-3 text-center p-3"
+        :class="(!activeSeries) ? 'show_off' : ''"
+      >
+        <div
+          class="col-12"
+        >
+          <div class="container-fluid d-flex justify-content-between align-items-end my_nav_menu">
+            <h1>Serie Tv</h1>
+            <h5
+              v-show="!activeSeries"
+              @click="activeSeries = !activeSeries"
+            >
+              Sfoglia tutti
+            </h5>
+            <h5
+              v-show="activeSeries"
+              @click="activeSeries = !activeSeries"
+            >
+              Nascondi
+            </h5>
+          </div>
+        </div>
+        <Card
+          v-for="(serie) in popular.series"
+          :key="serie.id"
+          :list="serie"
+        />
+      </div>
     </div>
   </main>
 </template>
@@ -104,6 +160,12 @@ export default {
   },
   props: {
     cards: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
+    popular: {
       type: Object,
       default() {
         return {};
