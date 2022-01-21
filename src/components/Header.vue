@@ -3,10 +3,30 @@
     <div class="container-fluid p-0">
       <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid">
-          <img
-            src="../assets/logo.png"
-            alt="logo"
-          >
+          <div class="my_nav d-flex align-items-end">
+            <img
+              src="../assets/logo.png"
+              alt="logo"
+              class="mx-2"
+            >
+            <ul class="list-inline text-white fs-4 mx-2">
+              <li class="list-inline-item me-4 active">
+                <a href="#">Home</a>
+              </li>
+              <li class="list-inline-item me-4">
+                <a href="#">Serie Tv</a>
+              </li>
+              <li class="list-inline-item me-4">
+                <a href="#">Film</a>
+              </li>
+              <li class="list-inline-item me-4">
+                <a href="#">Nuovi e popolari</a>
+              </li>
+              <li class="list-inline-item me-4">
+                <a href="#">La mia lista</a>
+              </li>
+            </ul>
+          </div>
           <div class="d-flex">
             <input
               v-model="searched"
@@ -41,4 +61,19 @@ export default {
 };
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.my_nav {
+  li {
+    a {
+      text-decoration: none;
+      color: inherit;
+      &:hover{
+        text-decoration: underline;
+      }
+    }
+    &.active a {
+      font-weight: bold;
+    }
+  }
+}
+</style>

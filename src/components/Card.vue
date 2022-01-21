@@ -105,8 +105,7 @@ export default {
       }
     },
     roundNumber(num) {
-      const number = parseFloat(num);
-      return Math.round(number / 2);
+      return Math.round(num / 2);
     },
   },
 };

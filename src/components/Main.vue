@@ -7,12 +7,27 @@
       <div
         v-show="cards.films"
         class="row gap-3 justify-content-center my-3 text-center p-3"
+        :class="(!activeFilms) ? 'show_off' : ''"
       >
         <div
           v-if="cards.films.length > 0"
           class="col-12"
         >
-          <h1>Films</h1>
+          <div class="container-fluid d-flex justify-content-between align-items-end my_nav_menu">
+            <h1>Film</h1>
+            <h5
+              v-show="!activeFilms"
+              @click="activeFilms = !activeFilms"
+            >
+              Sfoglia tutti
+            </h5>
+            <h5
+              v-show="activeFilms"
+              @click="activeFilms = !activeFilms"
+            >
+              Nascondi
+            </h5>
+          </div>
         </div>
         <div
           v-else
@@ -31,12 +46,27 @@
       <div
         v-show="cards.series"
         class="row gap-3 justify-content-center my-3 text-center p-3"
+        :class="(!activeSeries) ? 'show_off' : ''"
       >
         <div
           v-if="cards.series.length > 0"
           class="col-12"
         >
-          <h1>Serie TV</h1>
+          <div class="container-fluid d-flex justify-content-between align-items-end my_nav_menu">
+            <h1>Serie Tv</h1>
+            <h5
+              v-show="!activeSeries"
+              @click="activeSeries = !activeSeries"
+            >
+              Sfoglia tutti
+            </h5>
+            <h5
+              v-show="activeSeries"
+              @click="activeSeries = !activeSeries"
+            >
+              Nascondi
+            </h5>
+          </div>
         </div>
         <div
           v-else
@@ -86,7 +116,25 @@ export default {
       },
     },
   },
+  data() {
+    return {
+      activeFilms: false,
+      activeSeries: false,
+    };
+  },
 };
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.show_off {
+  height: 550px;
+  overflow: hidden;
+}
+
+.my_nav_menu {
+  h5:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
+</style>
