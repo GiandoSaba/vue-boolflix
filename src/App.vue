@@ -38,7 +38,7 @@ export default {
     return {
       query: 'https://api.themoviedb.org/3/',
       api_key: '89eb092bce881ee73ddbbdbb875f67e8',
-      language: 'it_IT',
+      language: 'it',
       searchText: null,
       loaded: false,
       searched: {
@@ -110,6 +110,7 @@ export default {
       const endPoint = 'trending/movie/week';
       const params = {
         api_key: this.api_key,
+        language: this.language,
       };
       axios
         .get(`${this.query}${endPoint}`, { params })
@@ -124,6 +125,7 @@ export default {
       const endPoint = 'trending/tv/week';
       const params = {
         api_key: this.api_key,
+        language: this.language,
       };
       axios
         .get(`${this.query}${endPoint}`, { params })
