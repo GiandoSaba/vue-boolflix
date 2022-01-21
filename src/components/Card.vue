@@ -66,6 +66,14 @@
             :class="(n <= roundNumber(list.vote_average)) ? 'fas fa-star' : 'far fa-star'"
           />
         </li>
+        <li class="list-group-item border-0">
+          <h1 class="fs-5">
+            <a
+              :href="`https://www.justwatch.com/${getTitlefoJW(list.title, list.name)}`"
+              target="_blank"
+            >Cerca su JustWatch</a>
+          </h1>
+        </li>
       </ul>
     </div>
   </div>
@@ -106,6 +114,20 @@ export default {
     },
     roundNumber(num) {
       return Math.round(num / 2);
+    },
+    getTitlefoJW(title, name) {
+      if (title && !name) {
+        const str = 'it/film/';
+        const correctTitle = title.replaceAll("'", '').replaceAll(' ', '-');
+        return str + correctTitle;
+      }
+      if (name && !title) {
+        const str = 'it/serie-tv/';
+        const correctTitle = name.replaceAll("'", '').replaceAll(' ', '-');
+        return str + correctTitle;
+      }
+
+      return '';
     },
   },
 };

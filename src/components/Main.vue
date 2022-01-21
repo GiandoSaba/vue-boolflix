@@ -85,17 +85,11 @@
     </div>
     <div
       v-else
-      class="container-fluid text-white"
+      class="container-fluid text-white home_page d-flex"
     >
-      <div
-        class="row justify-content-center my-3 text-center p-3"
-      >
-        <div
-          class="col-12"
-        >
-          <h1>Benvenuto in BOOLFLIX</h1>
-        </div>
-      </div>
+      <h1 class="m-auto text-danger text-center">
+        Benvenuto in <span class="d-block fs-1 fw-bold">BOOLFLIX</span>
+      </h1>
     </div>
   </main>
 </template>
@@ -127,7 +121,7 @@ export default {
 
 <style scoped lang="scss">
 .show_off {
-  height: 550px;
+  height: 540px;
   overflow: hidden;
 }
 
@@ -137,4 +131,9 @@ export default {
     text-decoration: underline;
   }
 }
+
+.home_page {
+  height: 500px;
+}
+
 </style>
