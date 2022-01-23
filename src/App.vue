@@ -82,6 +82,24 @@ export default {
         .then((result) => {
           if (result.data.results !== []) {
             this.searched.films = result.data.results;
+            this.searched.films.forEach((element, index) => {
+              const parametersSecond = {
+                api_key: this.api_key,
+                language: this.language,
+              };
+              axios
+                .get(`${this.query}movie/${element.id}/credits`, { params: parametersSecond })
+                .then((response) => {
+                  const cast = [];
+                  for (let i = 0; i < 5; i += 1) {
+                    cast.push(response.data.cast[i].name);
+                  }
+                  this.searched.films[index].cast = cast;
+                })
+                .catch((error) => {
+                  console.log(error);
+                });
+            });
           }
         })
         .catch((error) => {
@@ -90,16 +108,34 @@ export default {
     },
     getSeries() {
       const endPoint = 'search/tv';
-      const params = {
+      const parametersFirst = {
         api_key: this.api_key,
         language: this.language,
         query: this.searchText,
       };
       axios
-        .get(`${this.query}${endPoint}`, { params })
+        .get(`${this.query}${endPoint}`, { params: parametersFirst })
         .then((result) => {
           if (result.data.results !== []) {
             this.searched.series = result.data.results;
+            this.searched.series.forEach((element, index) => {
+              const parametersSecond = {
+                api_key: this.api_key,
+                language: this.language,
+              };
+              axios
+                .get(`${this.query}tv/${element.id}/credits`, { params: parametersSecond })
+                .then((response) => {
+                  const cast = [];
+                  for (let i = 0; i < 5; i += 1) {
+                    cast.push(response.data.cast[i].name);
+                  }
+                  this.searched.series[index].cast = cast;
+                })
+                .catch((error) => {
+                  console.log(error);
+                });
+            });
           }
         })
         .catch((error) => {
@@ -116,6 +152,24 @@ export default {
         .get(`${this.query}${endPoint}`, { params })
         .then((result) => {
           this.popularMovies.films = result.data.results;
+          this.popularMovies.films.forEach((element, index) => {
+            const parametersSecond = {
+              api_key: this.api_key,
+              language: this.language,
+            };
+            axios
+              .get(`${this.query}movie/${element.id}/credits`, { params: parametersSecond })
+              .then((response) => {
+                const cast = [];
+                for (let i = 0; i < 5; i += 1) {
+                  cast.push(response.data.cast[i].name);
+                }
+                this.popularMovies.films[index].cast = cast;
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          });
         })
         .catch((error) => {
           console.log(error);
@@ -131,6 +185,24 @@ export default {
         .get(`${this.query}${endPoint}`, { params })
         .then((result) => {
           this.popularMovies.series = result.data.results;
+          this.popularMovies.series.forEach((element, index) => {
+            const parametersSecond = {
+              api_key: this.api_key,
+              language: this.language,
+            };
+            axios
+              .get(`${this.query}tv/${element.id}/credits`, { params: parametersSecond })
+              .then((response) => {
+                const cast = [];
+                for (let i = 0; i < 5; i += 1) {
+                  cast.push(response.data.cast[i].name);
+                }
+                this.popularMovies.series[index].cast = cast;
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          });
         })
         .catch((error) => {
           console.log(error);

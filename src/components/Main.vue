@@ -8,11 +8,13 @@
         v-show="cards.films"
         :list="cards.films"
         :title="'Film'"
+        :type="'movie'"
       />
       <Cards
         v-show="cards.series"
         :list="cards.series"
         :title="'Serie TV'"
+        :type="'tv'"
       />
     </div>
     <div
@@ -23,11 +25,13 @@
         v-show="popular.films"
         :list="popular.films"
         :title="'Film Popolari'"
+        :type="'movie'"
       />
       <Cards
         v-show="popular.series"
         :list="popular.series"
         :title="'Serie TV Popolari'"
+        :type="'tv'"
       />
     </div>
   </main>

@@ -35,11 +35,13 @@
       v-for="(film) in list"
       :key="film.id"
       :list="film"
+      :type="type"
     />
   </div>
 </template>
 
 <script>
+
 import Card from './Card.vue';
 
 export default {
@@ -53,6 +55,10 @@ export default {
       default() {
         return null;
       },
+    },
+    type: {
+      type: String,
+      default: '',
     },
     title: {
       type: String,

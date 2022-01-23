@@ -12,13 +12,13 @@
         v-if="list.poster_path"
         :src="`https://image.tmdb.org/t/p/original${list.poster_path}`"
         class="card-img-top"
-        :alt="list.title"
+        :alt="title"
       >
       <img
         v-else
         src="../assets/stock_image.png"
         class="card-img-top"
-        :alt="list.title"
+        :alt="title"
       >
     </div>
     <div
@@ -30,16 +30,16 @@
           <h1 class="fs-5">
             Titolo
           </h1>
-          <p>{{ (list.title) ? list.title : list.name }}</p>
+          <p>{{ title }}</p>
         </li>
         <li
-          v-show="list.title !== list.original_title || list.name !== list.original_name"
+          v-show="title !== originalTitle"
           class="list-group-item border-0"
         >
           <h1 class="fs-5">
             Titolo Originale
           </h1>
-          <p>{{ (list.original_title) ? list.original_title : list.original_name }}</p>
+          <p>{{ originalTitle }}</p>
         </li>
         <li
           v-show="list.overview"
@@ -49,6 +49,20 @@
             Trama
           </h1>
           <p>{{ list.overview }}</p>
+        </li>
+        <li
+          v-show="list.cast"
+          class="list-group-item border-0"
+        >
+          <h1 class="fs-5">
+            Attori principali
+          </h1>
+          <p
+            v-for="actor in list.cast"
+            :key="filmid+actor"
+          >
+            {{ actor }}
+          </p>
         </li>
         <li class="list-group-item border-0">
           <h1 class="fs-5">
@@ -69,7 +83,7 @@
         <li class="list-group-item border-0">
           <h1 class="fs-5">
             <a
-              :href="`https://www.themoviedb.org/${getUrl(list.title, list.name)}`"
+              :href="`https://www.themoviedb.org/${getUrl()}`"
               target="_blank"
             >Cerca su TMDB</a>
           </h1>
@@ -89,10 +103,16 @@ export default {
         return {};
       },
     },
+    type: {
+      type: String,
+      default: '',
+    },
   },
   data() {
     return {
       active: false,
+      title: (this.type === 'movie') ? this.list.title : this.list.name,
+      originalTitle: (this.type === 'movie') ? this.list.original_title : this.list.original_name,
     };
   },
   methods: {
@@ -115,14 +135,8 @@ export default {
     roundNumber(num) {
       return Math.round(num / 2);
     },
-    getUrl(title, name) {
-      if (title && !name) {
-        return `movie/${this.list.id}`;
-      }
-      if (name && !title) {
-        return `tv/${this.list.id}`;
-      }
-      return '';
+    getUrl() {
+      return `${this.type}/${this.list.id}`;
     },
   },
 };
