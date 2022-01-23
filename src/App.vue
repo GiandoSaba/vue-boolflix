@@ -3,11 +3,15 @@
     id="app"
     class="bg-dark bg-gradient"
   >
-    <Header @takeSearch="search($event)" />
+    <Header
+      @takeSearch="search($event)"
+      @takeGenre="genreSelect($event)"
+    />
     <Main
       v-if="loaded"
       :cards="searched"
       :popular="popularMovies"
+      :genres="genres"
     />
     <div
       v-else
@@ -40,6 +44,7 @@ export default {
       api_key: '89eb092bce881ee73ddbbdbb875f67e8',
       language: 'it',
       searchText: null,
+      selectedGenre: '',
       loaded: false,
       searched: {
         films: null,
@@ -48,6 +53,10 @@ export default {
       popularMovies: {
         films: [],
         series: [],
+      },
+      genres: {
+        movie: null,
+        tv: null,
       },
     };
   },
@@ -70,6 +79,11 @@ export default {
         this.searchText = text;
       }
     },
+    genreSelect(text) {
+      if (text !== '') {
+        this.selectedGenre = text;
+      }
+    },
     getFilms() {
       const endPoint = 'search/movie';
       const params = {
@@ -83,22 +97,7 @@ export default {
           if (result.data.results !== []) {
             this.searched.films = result.data.results;
             this.searched.films.forEach((element, index) => {
-              const parametersSecond = {
-                api_key: this.api_key,
-                language: this.language,
-              };
-              axios
-                .get(`${this.query}movie/${element.id}/credits`, { params: parametersSecond })
-                .then((response) => {
-                  const cast = [];
-                  for (let i = 0; i < 5; i += 1) {
-                    cast.push(response.data.cast[i].name);
-                  }
-                  this.searched.films[index].cast = cast;
-                })
-                .catch((error) => {
-                  console.log(error);
-                });
+              this.getCast(element.id, index, 'movie', this.searched.films);
             });
           }
         })
@@ -119,22 +118,7 @@ export default {
           if (result.data.results !== []) {
             this.searched.series = result.data.results;
             this.searched.series.forEach((element, index) => {
-              const parametersSecond = {
-                api_key: this.api_key,
-                language: this.language,
-              };
-              axios
-                .get(`${this.query}tv/${element.id}/credits`, { params: parametersSecond })
-                .then((response) => {
-                  const cast = [];
-                  for (let i = 0; i < 5; i += 1) {
-                    cast.push(response.data.cast[i].name);
-                  }
-                  this.searched.series[index].cast = cast;
-                })
-                .catch((error) => {
-                  console.log(error);
-                });
+              this.getCast(element.id, index, 'tv', this.searched.series);
             });
           }
         })
@@ -153,23 +137,9 @@ export default {
         .then((result) => {
           this.popularMovies.films = result.data.results;
           this.popularMovies.films.forEach((element, index) => {
-            const parametersSecond = {
-              api_key: this.api_key,
-              language: this.language,
-            };
-            axios
-              .get(`${this.query}movie/${element.id}/credits`, { params: parametersSecond })
-              .then((response) => {
-                const cast = [];
-                for (let i = 0; i < 5; i += 1) {
-                  cast.push(response.data.cast[i].name);
-                }
-                this.popularMovies.films[index].cast = cast;
-              })
-              .catch((error) => {
-                console.log(error);
-              });
+            this.getCast(element.id, index, 'movie', this.popularMovies.films);
           });
+          this.getGenres('movie');
         })
         .catch((error) => {
           console.log(error);
@@ -186,23 +156,44 @@ export default {
         .then((result) => {
           this.popularMovies.series = result.data.results;
           this.popularMovies.series.forEach((element, index) => {
-            const parametersSecond = {
-              api_key: this.api_key,
-              language: this.language,
-            };
-            axios
-              .get(`${this.query}tv/${element.id}/credits`, { params: parametersSecond })
-              .then((response) => {
-                const cast = [];
-                for (let i = 0; i < 5; i += 1) {
-                  cast.push(response.data.cast[i].name);
-                }
-                this.popularMovies.series[index].cast = cast;
-              })
-              .catch((error) => {
-                console.log(error);
-              });
+            this.getCast(element.id, index, 'tv', this.popularMovies.series);
           });
+          this.getGenres('tv');
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    getCast(id, index, type, array) {
+      const endPoint = `${type}/${id}/credits`;
+      const params = {
+        api_key: this.api_key,
+        language: this.language,
+      };
+      axios
+        .get(`${this.query}${endPoint}`, { params })
+        .then((result) => {
+          const cast = [];
+          for (let i = 0; i < 5; i += 1) {
+            cast.push(result.data.cast[i].name);
+          }
+          // eslint-disable-next-line no-param-reassign
+          array[index].cast = cast;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    getGenres(type) {
+      const endPoint = `genre/${type}/list`;
+      const params = {
+        api_key: this.api_key,
+        language: this.language,
+      };
+      axios
+        .get(`${this.query}${endPoint}`, { params })
+        .then((result) => {
+          this.genres[type] = result.data.genres;
         })
         .catch((error) => {
           console.log(error);

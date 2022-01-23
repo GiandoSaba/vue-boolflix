@@ -1,5 +1,6 @@
 <template>
   <div
+    v-show="genreList.includes(selectedGenre) || selectedGenre == ''"
     class="card col-2 p-0"
     @mouseover="active = true"
     @mouseleave="active = false"
@@ -59,9 +60,24 @@
           </h1>
           <p
             v-for="actor in list.cast"
-            :key="filmid+actor"
+            :key="list.id+actor"
           >
             {{ actor }}
+          </p>
+        </li>
+        <li
+          v-show="list.genre_ids"
+          class="list-group-item border-0"
+        >
+          <h1 class="fs-5">
+            Generi
+          </h1>
+          <p
+            v-for="genre in list.genre_ids"
+            :key="list.id+genre"
+            class="text-left"
+          >
+            {{ getGenre(genre) }}
           </p>
         </li>
         <li class="list-group-item border-0">
@@ -107,10 +123,21 @@ export default {
       type: String,
       default: '',
     },
+    genres: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
+    selectedGenre: {
+      type: String,
+      default: '',
+    },
   },
   data() {
     return {
       active: false,
+      genreList: [],
       title: (this.type === 'movie') ? this.list.title : this.list.name,
       originalTitle: (this.type === 'movie') ? this.list.original_title : this.list.original_name,
     };
@@ -137,6 +164,25 @@ export default {
     },
     getUrl() {
       return `${this.type}/${this.list.id}`;
+    },
+    getGenre(genreId) {
+      const genresObj = this.genres;
+      let myGenre = '';
+      for (let i = 0; i < genresObj.movie.length; i += 1) {
+        const movieElement = genresObj.movie[i];
+        if (movieElement.id === genreId) {
+          myGenre = movieElement.name;
+          this.genreList.push(myGenre);
+        }
+      }
+      for (let i = 0; i < genresObj.tv.length; i += 1) {
+        const movieElement = genresObj.tv[i];
+        if (movieElement.id === genreId) {
+          myGenre = movieElement.name;
+          this.genreList.push(myGenre);
+        }
+      }
+      return myGenre;
     },
   },
 };

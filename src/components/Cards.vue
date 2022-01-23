@@ -36,6 +36,8 @@
       :key="film.id"
       :list="film"
       :type="type"
+      :genres="genres"
+      :selected-genre="selectedGenre"
     />
   </div>
 </template>
@@ -61,6 +63,16 @@ export default {
       default: '',
     },
     title: {
+      type: String,
+      default: '',
+    },
+    genres: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
+    selectedGenre: {
       type: String,
       default: '',
     },
