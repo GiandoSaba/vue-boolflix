@@ -1,22 +1,33 @@
 <template>
   <main class="py-1">
-    <select
-      id="genresSelect"
-      v-model="selectedGenre"
-      name="genres"
-      class="mx-4"
-    >
-      <option value="">
-        Filtra per genere
-      </option>
-      <option
-        v-for="genre in genres.movie"
-        :key="genre.id"
-        :value="genre.name"
-      >
-        {{ genre.name }}
-      </option>
-    </select>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-2">
+          <select
+            v-show="getAllGenres()"
+            id="genresSelect"
+            v-model="selectedGenre"
+            class="form-select m-4"
+            aria-label="Disabled select example"
+            name="genres"
+          >
+            <option
+              selected
+              value=""
+            >
+              Filtra per genere
+            </option>
+            <option
+              v-for="genre in allGenres"
+              :key="genre + 1"
+              :value="genre"
+            >
+              {{ genre }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
     <div
       v-if="cards.films || cards.series"
       class="container-fluid text-white"
@@ -93,23 +104,24 @@ export default {
   data() {
     return {
       selectedGenre: '',
-      allGenres: this.getAllGenres(),
+      allGenres: [],
     };
   },
   methods: {
     getAllGenres() {
-      const allGenres = [];
       this.genres.movie.forEach((element) => {
-        if (!allGenres.includes(element.name)) {
-          allGenres.push(element.name);
+        if (!this.allGenres.includes(element.name)) {
+          this.allGenres.push(element.name);
+          console.log(element.name);
         }
       });
       this.genres.tv.forEach((element) => {
-        if (!allGenres.includes(element.name)) {
-          allGenres.push(element.name);
+        if (!this.allGenres.includes(element.name)) {
+          this.allGenres.push(element.name);
+          console.log(element.name);
         }
       });
-      return allGenres;
+      return true;
     },
   },
 };

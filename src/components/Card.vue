@@ -6,8 +6,8 @@
     @mouseleave="active = false"
   >
     <div
-      v-if="!active"
       class="card-body"
+      :class="(active) ? 'd-none': ''"
     >
       <img
         v-if="list.poster_path"
@@ -23,7 +23,7 @@
       >
     </div>
     <div
-      v-else
+      :class="(!active) ? 'd-none': ''"
       class="card-body card-description"
     >
       <ul class="list-group list-group-flush">
